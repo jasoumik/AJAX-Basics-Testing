@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax 1- Text file</title>
+</head>
+<body>
+    <p>
+        Wanna Know about me?
+    </p>
+    <button id="button">Click here</button>
+    <br> <br>
+    <div id="text"></div>
+    <script>
+        //create event listener
+        document.getElementById('button').addEventListener('click',loadText);
+        function loadText(){
+            //create XHR object
+            var xhr= new XMLHttpRequest();
+            //Open - type,url/gile,async
+            xhr.open('GET','sample2.txt',true);
+
+            console.log('READYSTATE: ',xhr.readyState);
+
+            //optional- used for loaders
+            xhr.onprogress= function(){
+                console.log('READYSTATE: ',xhr.readyState);
+
+            }
+
+           // console.log(xhr);
+           // console.log('button clicked');
+
+
+           xhr.onload= function(){
+            console.log('READYSTATE: ',xhr.readyState);
+              if (this.status==200) {
+                //console.log(this.responseText);  
+
+                document.getElementById('text').innerHTML=this.responseText;
+              } 
+              else if(this.status==404){
+                  document.getElementById('text').innerHTML='not found :(';
+              }
+           }
+
+           xhr.onerror=function(){
+               console.log('Reqst Error....');
+           }
+
+        //  xhr.onreadystatechange = function () {
+        //     console.log('READYSTATE: ',xhr.readyState);
+        //   if (this.readyState==4 && this.status==200) {
+        //     //console.log(this.responseText);  
+        //   }
+        //  }
+           //sends request
+           xhr.send();
+        }
+    </script>
+</body>
+              <!-- // ready state values 
+             0 : reqst not initialized
+             1: server connection established 
+             2:  rqst received 
+             3:  processing rqst
+             4: rqst finished and response is ready
+             -->
+</html>

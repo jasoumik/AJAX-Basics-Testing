@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ajax 5- Fetch from PHP MySQl</title>
+</head>
+<body>
+  
+    <button id="button2">Get Users</button>   
+
+    <br> <br>
+    <br>
+    <h1>
+        Users
+   </h1>
+   <div id="users"></div>
+   <script>
+       document.getElementById('button2').addEventListener('click',
+       loadUsers);
+       function loadUsers(){
+           var xhr= new XMLHttpRequest();
+           xhr.open('GET','user.php',true);
+
+           xhr.onload=function(){
+               if (this.status==200) {
+                  // console.log(this.responseText);
+                   //document.getElementById('users').innerHTML=this.responseText;
+                   var users=JSON.parse(this.responseText);
+                   var output='';
+                   for(var i in users){
+                   output +='<ul>'+
+                   '<li>ID : '+users[i].id+' </li>'+
+                   '<li>Name : '+users[i].name+' </li>'+
+                   '</ul>';
+                   }
+                   console.log(this.responseText);
+                 //  document.getElementById('user').innerHTML=this.responseText;
+                   document.getElementById('users').innerHTML=output;
+               }
+           }
+           xhr.send();
+       }
+   </script>
+</body>
+</html>
